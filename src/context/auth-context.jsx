@@ -1,25 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { getCurrentUserFromLocalStorage } from "../utils/get-current-user";
-import { getUserDataService } from "../services/get_user";
 
 export const CurrentUserContext = createContext(null);
 export const CurrentUserUpdateContext = createContext(() => {});
 
 export function AuthContextProvider({ children }) {
 	const [user, setUser] = useState(null);
-	const [userData, setUserData] = useState(null);
-
-	useEffect(() => {
-		const handleUser = async () => {
-			if (user) {
-				const currentUser = await getUserDataService(user?.username);
-				setUserData(currentUser);
-			} else {
-				setUserData(null);
-			}
-		};
-		handleUser();
-	}, [user]);
 
 	useEffect(() => {
 		setUser(getCurrentUserFromLocalStorage());
@@ -31,7 +17,7 @@ export function AuthContextProvider({ children }) {
 	}, []);
 
 	return (
-		<CurrentUserContext.Provider value={{ user, userData }}>
+		<CurrentUserContext.Provider value={user}>
 			<CurrentUserUpdateContext.Provider value={setUser}>
 				{children}
 			</CurrentUserUpdateContext.Provider>
