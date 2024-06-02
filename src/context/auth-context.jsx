@@ -17,10 +17,8 @@ export function AuthContextProvider({ children }) {
 	}, []);
 
 	return (
-		<CurrentUserContext.Provider value={user}>
-			<CurrentUserUpdateContext.Provider value={setUser}>
-				{children}
-			</CurrentUserUpdateContext.Provider>
+		<CurrentUserContext.Provider value={{ user, setUser }}>
+			{children}
 		</CurrentUserContext.Provider>
 	);
 }

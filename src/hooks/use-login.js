@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { CurrentUserUpdateContext } from "../context/auth-context";
 
 export function useLogin() {
@@ -10,7 +10,7 @@ export function useLogin() {
 			`${import.meta.env.VITE_APP_CURRENT_USER_STORAGE_ID}`,
 			token
 		);
-		const user = jwt_decode(token);
+		const user = jwtDecode(token);
 		setCurrentUser(user);
 	};
 }
