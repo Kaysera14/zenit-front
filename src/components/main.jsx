@@ -1,9 +1,7 @@
-import PropTypes from "prop-types";
-
 export function Main({ children }) {
-	return <main className="">{children}</main>;
+	return (
+		<main className="flex flex-col flex-grow p-8 items-center justify-center">
+			{children}
+		</main>
+	);
 }
-
-Main.propTypes = {
-	children: PropTypes.node.isRequired,
-};
