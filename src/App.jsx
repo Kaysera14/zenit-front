@@ -5,6 +5,7 @@ import { Header } from "./components/header";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { Validate } from "./pages/validate";
+import { SingleModel } from "./pages/single-model";
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
 				<Route path="register" element={<Register />} />
 				<Route path="validate" element={<Validate />} />
 				<Route path="login" element={<Login />} />
+				<Route path="models/:slug" element={<SingleModel />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</>
