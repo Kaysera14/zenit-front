@@ -41,7 +41,7 @@ export function Header() {
 					<p className="flex justify-center pt-7 text-[4rem] border-b-[1px] border-b-white">
 						<Link to={"/"}>
 							<img
-								src="zenit-logo.webp"
+								src="/zenit-logo.webp"
 								alt="Zenit Bragi"
 								className="h-[9rem] w-[9rem]"
 							/>
