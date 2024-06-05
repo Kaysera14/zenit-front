@@ -1,30 +1,24 @@
+import { useState } from "react";
 import { Main } from "../components/main";
+import { useEffect } from "react";
+import { getPosts } from "../api/get-posts.js";
+import { PostCard } from "../components/postcard";
 
 export function Home() {
+	const [posts, setPosts] = useState([]);
+	useEffect(() => {
+		const fetchPosts = async () => {
+			const posts = await getPosts();
+			const postsData = posts.data;
+			setPosts(postsData);
+		};
+		fetchPosts();
+	}, [posts.length]);
 	return (
 		<Main>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
-			<div className="bg-[#D9D9D9] h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"></div>
+			{posts.map((post) => (
+				<PostCard key={post.model_id} post={post} />
+			))}
 		</Main>
 	);
 }
