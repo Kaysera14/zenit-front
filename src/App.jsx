@@ -13,9 +13,11 @@ function App() {
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="register" element={<Register />} />
-				<Route path="validate" element={<Validate />} />
-				<Route path="login" element={<Login />} />
+				<Route path="admin">
+					<Route path="register" element={<Register />} />
+					<Route path="validate" element={<Validate />} />
+					<Route path="login" element={<Login />} />
+				</Route>
 				<Route path="models/:slug" element={<SingleModel />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
