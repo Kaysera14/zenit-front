@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { Main } from "../components/main";
 import { useLogin } from "../hooks/use-login";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { loginUser } from "../api/login-user";
 import { LoginForm } from "../forms/login-form";
 import { Alert, Stack } from "@mui/material";
+import { CurrentUserContext } from "../context/auth-context";
 
 export function Login() {
+	const { user } = useContext(CurrentUserContext);
 	const setCurrentUser = useLogin();
 	const navigate = useNavigate();
 	const [loginData, setLoginData] = useState({
@@ -32,6 +34,12 @@ export function Login() {
 			setError(token.message);
 		}
 	};
+
+	useEffect(() => {
+		if (user) {
+			navigate("/admin/dashboard");
+		}
+	}, [user, navigate]);
 	return (
 		<Main>
 			<LoginForm
