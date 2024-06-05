@@ -8,13 +8,12 @@ export function Header() {
 	const location = useLocation();
 
 	useEffect(() => {
-		const dashboard = () => {
-			if (location.pathname.startsWith("/admin/dashboard")) {
-				setIsDashboard(true);
-			}
-		};
-		dashboard();
-	}, [location.pathname]);
+		if (location.pathname.startsWith("/admin/dashboard")) {
+			setIsDashboard(true);
+		} else {
+			setIsDashboard(false);
+		}
+	}, [location?.pathname]);
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -47,7 +46,7 @@ export function Header() {
 							>
 								<input
 									type="text"
-									className="w-[60px] h-[20px] text-xl text-center bg-transparent"
+									className="w-[75px] h-[20px] text-xl text-center bg-transparent"
 								/>
 							</form>
 							<p className="flex justify-center pt-0 text-[4rem]">
