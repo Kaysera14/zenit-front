@@ -15,7 +15,7 @@ export function Header() {
 	}, []);
 
 	return (
-		<header className="h-[12rem] w-full">
+		<header className="sm:h-[9rem] md:h-[12rem] w-full">
 			{!isMobile ? (
 				<>
 					<p className="flex justify-center pt-7 text-[4rem]">
@@ -38,7 +38,7 @@ export function Header() {
 				</>
 			) : (
 				<>
-					<p className="flex justify-center pt-7 text-[4rem] border-b-[1px] border-b-white">
+					<p className="flex justify-center py-2 text-[4rem] border-b-[1px] border-b-white">
 						<Link to={"/"}>
 							<img
 								src="/zenit-logo.webp"
