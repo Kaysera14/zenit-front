@@ -1,38 +1,24 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Main } from "../components/main";
-import { useContext, useEffect, useState } from "react";
-import { CurrentUserContext } from "../context/auth-context";
-import { useLogout } from "../hooks/use-logout";
+import { useEffect } from "react";
+import { getPosts } from "../api/get-posts.js";
+import { PostCard } from "../components/postcard";
 
 export function Home() {
-	const navigate = useNavigate();
-	const userData = useContext(CurrentUserContext);
-	const logout = useLogout();
-	const [user, setUser] = useState(null);
-	const handleLogout = () => {
-		logout();
-		navigate("/");
-	};
-
+	const [posts, setPosts] = useState([]);
 	useEffect(() => {
-		setUser(userData.user);
-	}, [userData]);
+		const fetchPosts = async () => {
+			const posts = await getPosts();
+			const postsData = posts.data;
+			setPosts(postsData);
+		};
+		fetchPosts();
+	}, [posts.length]);
 	return (
 		<Main>
-			<article className="flex flex-col items-center">
-				<p className="text-2xl">Welcome to the home page!</p>
-			</article>
-			<Link to="/login">Login</Link>
-			<Link to="/register">Register</Link>
-			<Link to="/validate">Validate</Link>
-			<Link to="404">404</Link>
-			{user ? (
-				<p>
-					{user.username}, wanna <button onClick={handleLogout}>logout</button>?
-				</p>
-			) : (
-				<p>Not logged in</p>
-			)}
+			{posts.map((post) => (
+				<PostCard key={post.model_id} post={post} />
+			))}
 		</Main>
 	);
 }

@@ -82,7 +82,7 @@ export const RegisterForm = ({
 			>
 				Registro
 			</Button>
-			<Link to="/login" className="text-sky-950">
+			<Link to="/admin/login" className="text-sky-950">
 				<p>¿Ya tienes cuenta? Inicia sesión</p>
 			</Link>
 		</form>

@@ -27,7 +27,7 @@ export function Login() {
 		const token = await loginUser(loginData.email, loginData.password);
 		if (token.status == "ok") {
 			setCurrentUser(token.token);
-			navigate("/");
+			navigate("/admin/dashboard");
 		} else {
 			setError(token.message);
 		}

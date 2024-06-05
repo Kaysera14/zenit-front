@@ -60,7 +60,7 @@ export const LoginForm = ({ loginData, handleInputChange, handleSubmit }) => {
 			>
 				Login
 			</Button>
-			<Link to="/register" className="text-sky-950">
+			<Link to="/admin/register" className="text-sky-950">
 				<p>¿No tienes cuenta? Regístrate</p>
 			</Link>
 		</form>
