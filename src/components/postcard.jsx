@@ -4,7 +4,7 @@ export function PostCard(post) {
 	const apiURL = import.meta.env.VITE_APP_BACKEND_UPLOADS;
 	const postData = post.post;
 	return (
-		<article className="py-2 px-2 text-center break-inside-avoid-column ">
+		<article className="gap-2 text-center break-inside-avoid-column ">
 			<Link
 				className="overflow-hidden block relative"
 				to={"/models/" + postData.slug}
