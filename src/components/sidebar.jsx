@@ -2,13 +2,13 @@ import { Divider } from "@mui/material";
 import { useLogout } from "../hooks/use-logout";
 import { Logout } from "@mui/icons-material";
 
-export function Sidebar({ user, setModule }) {
+export function Sidebar({ user, setModule, navigate }) {
 	const logout = useLogout();
 	const handleLogout = () => {
 		logout();
 	};
 	return (
-		<aside className="bg-slate-900 w-[18rem] h-screen border-r-2 border-gray-600 absolute flex flex-col">
+		<aside className="bg-slate-900 w-[18rem] h-screen border-r-2 border-gray-600 absolute flex flex-col top-0">
 			<button onClick={() => alert("Soy un easter egg")}>
 				<img
 					src="/zenit-logo.webp"
@@ -35,7 +35,7 @@ export function Sidebar({ user, setModule }) {
 							className="uppercase mx-auto w-full p-2 bg-slate-800 text-white hover:bg-slate-700"
 							onClick={() => setModule("home")}
 						>
-							Inicio
+							Panel de control
 						</button>
 					</li>
 					<li>
@@ -44,6 +44,14 @@ export function Sidebar({ user, setModule }) {
 							onClick={() => setModule("upload")}
 						>
 							Subir modelo
+						</button>
+					</li>
+					<li>
+						<button
+							className="uppercase mx-auto w-full p-2 bg-slate-800 text-white hover:bg-slate-700"
+							onClick={() => navigate("/")}
+						>
+							Volver a la web
 						</button>
 					</li>
 				</ul>
