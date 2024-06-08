@@ -9,6 +9,9 @@ import { SearchForm } from "../forms/search-form";
 import { Postrow } from "../components/postrow";
 import { deletePosts } from "../api/delete-post";
 import { editPosts } from "../api/edit-post";
+import { Alert, Stack } from "@mui/material";
+import { NewModelForm } from "../forms/new-model-form";
+import { uploadPost } from "../api/upload-post";
 
 export function Dashboard() {
 	const { user } = useContext(CurrentUserContext);
@@ -16,6 +19,36 @@ export function Dashboard() {
 	const navigate = useNavigate();
 	const [posts, setPosts] = useState([]);
 	const apiURL = import.meta.env.VITE_APP_BACKEND_UPLOADS;
+	const [error, setError] = useState(null);
+	const [uploadData, setUploadData] = useState({
+		title: "",
+		description: "",
+		technologies: "",
+		category1: "",
+		category2: "",
+		images: [],
+	});
+
+	const handleUploadChange = (event) => {
+		setUploadData({
+			...uploadData,
+			[event.target.name]: event.target.value,
+		});
+	};
+
+	const handleUploadSubmit = async (event) => {
+		event.preventDefault();
+		try {
+			const upload = await uploadPost(uploadData);
+			if (upload.status === "ok") {
+				navigate("/admin/dashboard");
+			} else {
+				setError(upload.message);
+			}
+		} catch (error) {
+			setError(error.message);
+		}
+	};
 
 	const handleDelete = async (slug) => {
 		await deletePosts(slug);
@@ -58,7 +91,7 @@ export function Dashboard() {
 		<>
 			<Topbar />
 			<Sidebar user={user} setModule={setModule} navigate={navigate} />
-			<Main className={"ml-[18rem]"}>
+			<Main className={"ml-[18rem] md:gap-0 bg-slate-900"}>
 				{module === "home" ? (
 					<section>
 						{/* <SearchForm /> */}
@@ -80,7 +113,25 @@ export function Dashboard() {
 					</section>
 				) : null}
 				{module === "upload" ? (
-					<h1>hacer formulario para subir modelos y testearlo</h1>
+					<NewModelForm
+						uploadData={uploadData}
+						handleUploadChange={handleUploadChange}
+						handleUploadSubmit={handleUploadSubmit}
+					/>
+				) : null}
+				{error ? (
+					<Stack
+						className="w-[100%] fixed bottom-0 right-0 bg-white mt-4 xl:w-[50%]"
+						spacing={2}
+					>
+						<Alert
+							variant="outlined"
+							severity="warning"
+							onClose={() => setError("")}
+						>
+							{error}
+						</Alert>
+					</Stack>
 				) : null}
 			</Main>
 		</>
