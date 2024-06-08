@@ -24,7 +24,7 @@ export function Validate() {
 		event.preventDefault();
 		const validate = await validateMail(registrationCode.registrationCode);
 		if (validate.status == "ok") {
-			navigate("/login");
+			navigate("/admin/login");
 		} else {
 			setError(validate.message);
 		}

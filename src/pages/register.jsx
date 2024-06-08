@@ -29,7 +29,7 @@ export function Register() {
 			registerData.password
 		);
 		if (registration.status == "ok") {
-			navigate("/validate");
+			navigate("/admin/validate");
 		} else {
 			setError(registration.message);
 		}
