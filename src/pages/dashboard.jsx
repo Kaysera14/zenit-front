@@ -20,6 +20,9 @@ export function Dashboard() {
 	const [posts, setPosts] = useState([]);
 	const apiURL = import.meta.env.VITE_APP_BACKEND_UPLOADS;
 	const [error, setError] = useState(null);
+	const token = localStorage.getItem(
+		import.meta.env.VITE_APP_CURRENT_USER_STORAGE_ID
+	);
 	const [uploadData, setUploadData] = useState({
 		title: "",
 		description: "",
@@ -39,9 +42,29 @@ export function Dashboard() {
 	const handleUploadSubmit = async (event) => {
 		event.preventDefault();
 		try {
-			const upload = await uploadPost(uploadData);
-			if (upload.status === "ok") {
-				navigate("/admin/dashboard");
+			const formData = new FormData();
+			formData.append("title", uploadData.title);
+			formData.append("description", uploadData.description);
+			formData.append("technologies", uploadData.technologies);
+			formData.append("category1", uploadData.category1);
+			formData.append("category2", uploadData.category2);
+
+			uploadData.images.forEach((image) => {
+				formData.append("images", image);
+			});
+
+			const upload = await uploadPost(formData, token);
+			if (upload.status == "ok") {
+				setModule("home");
+				setUploadData({
+					title: "",
+					description: "",
+					technologies: "",
+					category1: "",
+					category2: "",
+					images: [],
+				});
+				setError(null);
 			} else {
 				setError(upload.message);
 			}
@@ -93,13 +116,12 @@ export function Dashboard() {
 			<Sidebar user={user} setModule={setModule} navigate={navigate} />
 			<Main className={"ml-[18rem] md:gap-0 bg-slate-900"}>
 				{module === "home" ? (
-					<section>
+					<section className="w-full flex flex-col items-center gap-4">
 						{/* <SearchForm /> */}
-						<h1>
-							hacer dashboard para seleccionar modelos que borrar en masa,
-							editar y ver, todo inline
+						<h1 className="uppercase text-2xl">
+							Edita y borra los modelos ya subidos
 						</h1>
-						<ul>
+						<ul className="w-full">
 							{posts.map((post) => (
 								<Postrow
 									key={post?.model_id}
@@ -114,6 +136,7 @@ export function Dashboard() {
 				) : null}
 				{module === "upload" ? (
 					<NewModelForm
+						setUploadData={setUploadData}
 						uploadData={uploadData}
 						handleUploadChange={handleUploadChange}
 						handleUploadSubmit={handleUploadSubmit}
