@@ -1,7 +1,13 @@
-import { METHODS, sendApiRequest } from "./send-api-request";
-
-export async function uploadPost(uploadData) {
-	const response = await sendApiRequest(METHODS.POST, "/models", uploadData);
-
-	return response;
+export async function uploadPost(data, token) {
+	const response = await fetch(`${import.meta.env.VITE_APP_BACKEND}/models/`, {
+		method: "POST",
+		headers: {
+			Authorization: `${token}`,
+		},
+		body: data,
+	});
+	const result = await response.json();
+	console.log(response);
+	console.log(result);
+	return result;
 }
