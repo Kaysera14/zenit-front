@@ -4,8 +4,9 @@ import { useEffect } from "react";
 import { getPosts } from "../api/get-posts.js";
 import { PostCard } from "../components/postcard";
 
-export function Home() {
+export function Home({ filter }) {
 	const [posts, setPosts] = useState([]);
+	const [filteredPosts, setFilteredPosts] = useState([]);
 
 	useEffect(() => {
 		const fetchPosts = async () => {
@@ -13,23 +14,29 @@ export function Home() {
 			const postsData = posts.data;
 			setPosts(postsData);
 		};
-		fetchPosts();
-	}, [posts.length]);
 
-	useEffect(() => {
-		const fetchPosts = async () => {
-			const posts = await getPosts();
-			const postsData = posts.data;
-			setPosts(postsData);
-		};
-		const interval = setInterval(fetchPosts, 5000);
-		return () => clearInterval(interval);
-	}, []);
+		if (filter === "Professional" || filter === "Personal") {
+			const newFilteredPosts = posts.filter((post) =>
+				post.category1.toLowerCase().includes(filter.toLowerCase())
+			);
+			setFilteredPosts(newFilteredPosts);
+		} else {
+			if (posts.length === 0) {
+				fetchPosts();
+			}
+		}
+
+		if (filter === "") {
+			setFilteredPosts([]);
+		}
+	}, [filter, posts]);
 	return (
 		<Main>
-			{posts.map((post) => (
-				<PostCard key={post.model_id} post={post} />
-			))}
+			{filteredPosts.length > 0
+				? filteredPosts.map((post) => (
+						<PostCard key={post.model_id} post={post} />
+				  ))
+				: posts.map((post) => <PostCard key={post.model_id} post={post} />)}
 		</Main>
 	);
 }
