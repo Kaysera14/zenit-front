@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-export function Header() {
+export function Header({ setFilter }) {
 	const [isMobile, setIsMobile] = useState(false);
 	const [isDashboard, setIsDashboard] = useState(false);
 	const navigate = useNavigate();
@@ -50,17 +50,25 @@ export function Header() {
 								/>
 							</form>
 							<p className="flex justify-center pt-0 text-[4rem]">
-								<Link to={"/"}>Zenit Bragi</Link>
+								<Link onClick={() => setFilter("")} to={"/"}>
+									Zenit Bragi
+								</Link>
 							</p>
 							<nav>
 								<ul className="flex justify-center align-middle gap-4">
 									<li>
-										<button className="border-4 w-[148px] h-[40px] text-xl text-center">
+										<button
+											onClick={() => setFilter("Personal")}
+											className="border-4 w-[148px] h-[40px] text-xl text-center"
+										>
 											Personal
 										</button>
 									</li>
 									<li>
-										<button className="border-4 w-[148px] h-[40px] text-xl text-center">
+										<button
+											onClick={() => setFilter("Professional")}
+											className="border-4 w-[148px] h-[40px] text-xl text-center"
+										>
 											Professional
 										</button>
 									</li>

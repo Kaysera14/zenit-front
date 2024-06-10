@@ -7,13 +7,15 @@ import { Register } from "./pages/register";
 import { Validate } from "./pages/validate";
 import { SingleModel } from "./pages/single-model";
 import { Dashboard } from "./pages/dashboard";
+import { useState } from "react";
 
 function App() {
+	const [filter, setFilter] = useState("");
 	return (
 		<>
-			<Header />
+			<Header setFilter={setFilter} />
 			<Routes>
-				<Route path="/" element={<Home />} />
+				<Route path="/" element={<Home filter={filter} />} />
 				<Route path="admin">
 					<Route path="register" element={<Register />} />
 					<Route path="validate" element={<Validate />} />

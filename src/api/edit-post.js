@@ -1,7 +1,15 @@
-import { METHODS, sendApiRequest } from "./send-api-request";
-
-export async function editPosts(slug) {
-	const posts = await sendApiRequest(METHODS.PUT, `/models/${slug}`);
-
-	return posts;
+export async function editPosts(token, editData) {
+	const response = await fetch(
+		`${import.meta.env.VITE_APP_BACKEND}/models/${editData?.slug}`,
+		{
+			method: "PUT",
+			headers: {
+				Authorization: `${token}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(editData),
+		}
+	);
+	const result = await response.json();
+	return result;
 }

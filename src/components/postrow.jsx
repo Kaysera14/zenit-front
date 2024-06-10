@@ -1,7 +1,13 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
-export function Postrow({ post, apiURL, handleDelete, handleEdit }) {
+export function Postrow({
+	post,
+	apiURL,
+	handleDelete,
+	setModelEdit,
+	setModule,
+}) {
 	return (
 		<li className="flex flex-row w-full items-center justify-around">
 			<p>{post?.model_id}</p>
@@ -12,12 +18,14 @@ export function Postrow({ post, apiURL, handleDelete, handleEdit }) {
 					className="w-20 h-20 static object-cover"
 				/>
 			</Link>
-			<p>{post?.title}</p>
-			<p>{post?.category1}</p>
-			<p>{post?.category2}</p>
+			<p className="w-[12.5%]">{post?.title}</p>
+			<p className="w-[12.5%]">{post?.category1}</p>
+			<p className="w-[12.5%]">{post?.category2}</p>
+			<p className="w-[12.5%]">{post?.createdAt}</p>
 			<button
 				onClick={() => {
-					handleEdit(post?.slug);
+					setModelEdit(post?.slug);
+					setModule("edit");
 				}}
 			>
 				<Edit />

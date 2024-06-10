@@ -7,7 +7,5 @@ export async function uploadPost(data, token) {
 		body: data,
 	});
 	const result = await response.json();
-	console.log(response);
-	console.log(result);
 	return result;
 }

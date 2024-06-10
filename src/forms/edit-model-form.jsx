@@ -7,51 +7,21 @@ import {
 	RadioGroup,
 	TextField,
 } from "@mui/material";
-import { useRef, useState } from "react";
 
-export const NewModelForm = ({
-	setUploadData,
-	uploadData,
-	handleUploadChange,
-	handleUploadSubmit,
+export const EditModel = ({
+	modelEdit,
+	editData,
+	handleEdit,
+	handleEditChange,
 }) => {
-	const fileInputRef = useRef(null);
-	const [selectedImages, setSelectedImages] = useState([]);
-	const [webImages, setWebImages] = useState([]);
-
-	const handleChangeImage = (e) => {
-		e.preventDefault();
-
-		if (e.target) {
-			const files = e.target.files;
-			if (files) {
-				const filesArray = Array.from(files);
-
-				const newImages = filesArray.map((file) => URL.createObjectURL(file));
-
-				setSelectedImages([...selectedImages, ...files]);
-				setWebImages([...webImages, ...newImages]);
-
-				setUploadData({
-					...uploadData,
-					images: [...selectedImages, ...files],
-					webImages: [...webImages, ...newImages],
-				});
-			}
-		}
-	};
-
-	const handleFileClick = () => {
-		fileInputRef.current.click();
-	};
 	return (
 		<>
-			<h1 className="w-full text-center text-xl py-4">
-				Introduce los datos de tu nueva publicación
+			<h1 className="w-full text-center text-xl py-4 uppercase">
+				Estás editando el modelo de {modelEdit}
 			</h1>
 			<form
 				className="flex flex-col w-full items-center justify-center gap-2"
-				onSubmit={handleUploadSubmit}
+				onSubmit={handleEdit}
 			>
 				<TextField
 					label="Título del modelo"
@@ -59,8 +29,8 @@ export const NewModelForm = ({
 					type="text"
 					name="title"
 					autoComplete="title"
-					value={uploadData.title}
-					onChange={handleUploadChange}
+					value={editData?.title || ""}
+					onChange={handleEditChange}
 					required
 					variant="filled"
 					className="bg-white w-[40%] m-2"
@@ -71,8 +41,8 @@ export const NewModelForm = ({
 					type="text"
 					name="description"
 					autoComplete="description"
-					value={uploadData.description}
-					onChange={handleUploadChange}
+					value={editData?.description || ""}
+					onChange={handleEditChange}
 					required
 					variant="filled"
 					multiline
@@ -85,8 +55,8 @@ export const NewModelForm = ({
 					type="text"
 					name="technologies"
 					autoComplete="technologies"
-					value={uploadData.technologies}
-					onChange={handleUploadChange}
+					value={editData?.technologies || ""}
+					onChange={handleEditChange}
 					required
 					variant="filled"
 					className="bg-white w-[40%] m-2"
@@ -96,8 +66,8 @@ export const NewModelForm = ({
 					<RadioGroup
 						aria-labelledby="category1"
 						name="category1"
-						value={uploadData.category1}
-						onChange={handleUploadChange}
+						value={editData?.category1 || ""}
+						onChange={handleEditChange}
 						className="flex gap-2 w-full justify-center items-center text-black"
 						sx={{ flexDirection: "row" }}
 					>
@@ -118,8 +88,8 @@ export const NewModelForm = ({
 					<RadioGroup
 						aria-labelledby="category2"
 						name="category2"
-						value={uploadData.category2}
-						onChange={handleUploadChange}
+						value={editData?.category2 || ""}
+						onChange={handleEditChange}
 						className="flex gap-2 w-full justify-center items-center text-black"
 						sx={{ flexDirection: "row" }}
 					>
@@ -140,37 +110,8 @@ export const NewModelForm = ({
 						/>
 					</RadioGroup>
 				</FormControl>
-				{webImages?.length !== 0 && (
-					<ul className="grid grid-cols-2 overflow-y-scroll gap-1 md:grid-cols-4">
-						{webImages?.map((image, index) => (
-							<li key={index}>
-								<img
-									src={`${image}`}
-									alt="rentImage"
-									className="w-48 static object-cover rounded-md"
-								/>
-							</li>
-						))}
-					</ul>
-				)}
-				<input
-					className="custom-file-input hidden"
-					type="file"
-					id="file-input"
-					onChange={handleChangeImage}
-					accept="image/*"
-					ref={fileInputRef}
-					multiple
-				/>
-				<button
-					type="button"
-					className="flex flex-col items-center justify-center bg-black text-white p-4 rounded-md"
-					onClick={handleFileClick}
-				>
-					Añadir imágenes
-				</button>
 				<Button type="submit" sx={{ backgroundColor: "black" }}>
-					Subir modelo
+					Editar modelo
 				</Button>
 			</form>
 		</>
