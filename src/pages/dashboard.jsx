@@ -12,6 +12,8 @@ import { editPosts } from "../api/edit-post";
 import { Alert, Stack } from "@mui/material";
 import { NewModelForm } from "../forms/new-model-form";
 import { uploadPost } from "../api/upload-post";
+import { EditModel } from "../forms/edit-model";
+import { getSinglePost } from "../api/get-single-post";
 
 export function Dashboard() {
 	const { user } = useContext(CurrentUserContext);
@@ -31,6 +33,39 @@ export function Dashboard() {
 		category2: "",
 		images: [],
 	});
+
+	const [modelEdit, setModelEdit] = useState(null);
+	const [editData, setEditData] = useState({
+		slug: "",
+		title: "",
+		description: "",
+		technologies: "",
+		category1: "",
+		category2: "",
+	});
+
+	const handleEditChange = (event) => {
+		setEditData({
+			...editData,
+			[event.target.name]: event.target.value,
+		});
+	};
+
+	useEffect(() => {
+		const fetchModelToEdit = async () => {
+			const response = await getSinglePost(modelEdit);
+			const modelToEdit = response.data;
+			setEditData({
+				slug: modelToEdit?.slug,
+				title: modelToEdit?.title,
+				description: modelToEdit?.description,
+				technologies: modelToEdit?.technologies,
+				category1: modelToEdit?.category1,
+				category2: modelToEdit?.category2,
+			});
+		};
+		fetchModelToEdit();
+	}, [modelEdit]);
 
 	const handleUploadChange = (event) => {
 		setUploadData({
@@ -65,6 +100,7 @@ export function Dashboard() {
 					images: [],
 				});
 				setError(null);
+				setPosts([]);
 			} else {
 				setError(upload.message);
 			}
@@ -78,9 +114,10 @@ export function Dashboard() {
 		setPosts([]);
 	};
 
-	const handleEdit = async (slug) => {
-		await editPosts(slug);
+	const handleEdit = async () => {
+		await editPosts(token, editData);
 		setPosts([]);
+		setModule("home");
 	};
 
 	useEffect(() => {
@@ -114,7 +151,11 @@ export function Dashboard() {
 		<>
 			<Topbar />
 			<Sidebar user={user} setModule={setModule} navigate={navigate} />
-			<Main className={"ml-[18rem] md:gap-0 bg-slate-900"}>
+			<Main
+				className={
+					"ml-[18rem] pb-0 pt-[8.45rem] md:gap-0 content-start mb-0 bg-slate-900 h-[100vh]"
+				}
+			>
 				{module === "home" ? (
 					<section className="w-full flex flex-col items-center gap-4">
 						{/* <SearchForm /> */}
@@ -128,7 +169,8 @@ export function Dashboard() {
 									post={post}
 									apiURL={apiURL}
 									handleDelete={handleDelete}
-									handleEdit={handleEdit}
+									setModelEdit={setModelEdit}
+									setModule={setModule}
 								/>
 							))}
 						</ul>
@@ -155,6 +197,13 @@ export function Dashboard() {
 							{error}
 						</Alert>
 					</Stack>
+				) : null}
+				{module === "edit" ? (
+					<EditModel
+						handleEdit={handleEdit}
+						editData={editData}
+						handleEditChange={handleEditChange}
+					/>
 				) : null}
 			</Main>
 		</>

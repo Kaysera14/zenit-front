@@ -1,7 +1,13 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
-export function Postrow({ post, apiURL, handleDelete, handleEdit }) {
+export function Postrow({
+	post,
+	apiURL,
+	handleDelete,
+	setModelEdit,
+	setModule,
+}) {
 	return (
 		<li className="flex flex-row w-full items-center justify-around">
 			<p>{post?.model_id}</p>
@@ -15,9 +21,11 @@ export function Postrow({ post, apiURL, handleDelete, handleEdit }) {
 			<p>{post?.title}</p>
 			<p>{post?.category1}</p>
 			<p>{post?.category2}</p>
+			<p>{post?.createdAt}</p>
 			<button
 				onClick={() => {
-					handleEdit(post?.slug);
+					setModelEdit(post?.slug);
+					setModule("edit");
 				}}
 			>
 				<Edit />
