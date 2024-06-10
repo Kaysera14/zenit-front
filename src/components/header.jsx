@@ -76,17 +76,37 @@ export function Header({ setFilter }) {
 							</nav>
 						</>
 					) : (
-						<>
-							<p className="flex justify-center py-2 text-[4rem] border-b-[1px] border-b-white">
-								<Link to={"/"}>
+						<section className="border-b-[1px] border-b-white pb-2">
+							<p className="flex justify-center py-2 text-[4rem]">
+								<Link onClick={() => setFilter("")} to={"/"}>
 									<img
 										src="/zenit-logo.webp"
 										alt="Zenit Bragi"
-										className="h-[9rem] w-[9rem]"
+										className="h-[6.4rem] w-[6.4rem]"
 									/>
 								</Link>
 							</p>
-						</>
+							<nav>
+								<ul className="flex justify-center align-middle gap-4">
+									<li>
+										<button
+											onClick={() => setFilter("Personal")}
+											className="border-4 w-[148px] h-[40px] text-xl text-center"
+										>
+											Personal
+										</button>
+									</li>
+									<li>
+										<button
+											onClick={() => setFilter("Professional")}
+											className="border-4 w-[148px] h-[40px] text-xl text-center"
+										>
+											Professional
+										</button>
+									</li>
+								</ul>
+							</nav>
+						</section>
 					)}
 				</header>
 			) : null}
