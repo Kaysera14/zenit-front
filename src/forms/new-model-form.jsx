@@ -76,7 +76,7 @@ export const NewModelForm = ({
 					required
 					variant="filled"
 					multiline
-					rows={4}
+					rows={10}
 					className="bg-white w-[40%] m-2"
 				/>
 				<TextField
