@@ -18,10 +18,10 @@ export function Postrow({
 					className="w-20 h-20 static object-cover"
 				/>
 			</Link>
-			<p>{post?.title}</p>
-			<p>{post?.category1}</p>
-			<p>{post?.category2}</p>
-			<p>{post?.createdAt}</p>
+			<p className="w-[12.5%]">{post?.title}</p>
+			<p className="w-[12.5%]">{post?.category1}</p>
+			<p className="w-[12.5%]">{post?.category2}</p>
+			<p className="w-[12.5%]">{post?.createdAt}</p>
 			<button
 				onClick={() => {
 					setModelEdit(post?.slug);

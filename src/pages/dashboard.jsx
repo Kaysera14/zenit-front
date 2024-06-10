@@ -162,7 +162,7 @@ export function Dashboard() {
 						<h1 className="uppercase text-2xl">
 							Edita y borra los modelos ya subidos
 						</h1>
-						<ul className="w-full">
+						<ul className="w-full flex gap-2 flex-col">
 							{posts.map((post) => (
 								<Postrow
 									key={post?.model_id}
