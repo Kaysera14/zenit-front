@@ -12,7 +12,7 @@ import { editPosts } from "../api/edit-post";
 import { Alert, Stack } from "@mui/material";
 import { NewModelForm } from "../forms/new-model-form";
 import { uploadPost } from "../api/upload-post";
-import { EditModel } from "../forms/edit-model";
+import { EditModel } from "../forms/edit-model-form";
 import { getSinglePost } from "../api/get-single-post";
 
 export function Dashboard() {
