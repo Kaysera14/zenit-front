@@ -153,7 +153,7 @@ export function Dashboard() {
 			<Sidebar user={user} setModule={setModule} navigate={navigate} />
 			<Main
 				className={
-					"ml-[18rem] pb-0 pt-[8.45rem] md:gap-0 content-start mb-0 bg-slate-900 h-[100vh]"
+					"ml-[18rem] pt-[8.45rem] md:gap-0 content-start bg-slate-900 h-screen sm:mb-0"
 				}
 			>
 				{module === "home" ? (
@@ -200,6 +200,7 @@ export function Dashboard() {
 				) : null}
 				{module === "edit" ? (
 					<EditModel
+						modelEdit={modelEdit}
 						handleEdit={handleEdit}
 						editData={editData}
 						handleEditChange={handleEditChange}

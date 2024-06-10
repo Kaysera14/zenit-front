@@ -8,11 +8,16 @@ import {
 	TextField,
 } from "@mui/material";
 
-export const EditModel = ({ editData, handleEdit, handleEditChange }) => {
+export const EditModel = ({
+	modelEdit,
+	editData,
+	handleEdit,
+	handleEditChange,
+}) => {
 	return (
 		<>
-			<h1 className="w-full text-center text-xl py-4">
-				Estás editando el modelo {editData?.title}
+			<h1 className="w-full text-center text-xl py-4 uppercase">
+				Estás editando el modelo de {modelEdit}
 			</h1>
 			<form
 				className="flex flex-col w-full items-center justify-center gap-2"
@@ -24,8 +29,7 @@ export const EditModel = ({ editData, handleEdit, handleEditChange }) => {
 					type="text"
 					name="title"
 					autoComplete="title"
-					defaultValue={editData?.title}
-					value={editData?.title}
+					value={editData?.title || ""}
 					onChange={handleEditChange}
 					required
 					variant="filled"
@@ -37,13 +41,12 @@ export const EditModel = ({ editData, handleEdit, handleEditChange }) => {
 					type="text"
 					name="description"
 					autoComplete="description"
-					defaultValue={editData?.description}
-					value={editData?.description}
+					value={editData?.description || ""}
 					onChange={handleEditChange}
 					required
 					variant="filled"
 					multiline
-					rows={4}
+					rows={10}
 					className="bg-white w-[40%] m-2"
 				/>
 				<TextField
@@ -52,8 +55,7 @@ export const EditModel = ({ editData, handleEdit, handleEditChange }) => {
 					type="text"
 					name="technologies"
 					autoComplete="technologies"
-					defaultValue={editData?.technologies}
-					value={editData?.technologies}
+					value={editData?.technologies || ""}
 					onChange={handleEditChange}
 					required
 					variant="filled"
@@ -64,7 +66,6 @@ export const EditModel = ({ editData, handleEdit, handleEditChange }) => {
 					<RadioGroup
 						aria-labelledby="category1"
 						name="category1"
-						defaultValue={editData?.category1 || ""}
 						value={editData?.category1 || ""}
 						onChange={handleEditChange}
 						className="flex gap-2 w-full justify-center items-center text-black"
@@ -87,7 +88,6 @@ export const EditModel = ({ editData, handleEdit, handleEditChange }) => {
 					<RadioGroup
 						aria-labelledby="category2"
 						name="category2"
-						defaultValue={editData?.category2 || ""}
 						value={editData?.category2 || ""}
 						onChange={handleEditChange}
 						className="flex gap-2 w-full justify-center items-center text-black"
