@@ -9,6 +9,7 @@ import { SingleModel } from "./pages/single-model";
 import { Dashboard } from "./pages/dashboard";
 import { useEffect, useState } from "react";
 import { getPosts } from "./api/get-posts";
+import { Footer } from "./components/footer";
 
 function App() {
 	const [filter, setFilter] = useState("");
@@ -54,6 +55,7 @@ function App() {
 				<Route path="models/:slug" element={<SingleModel />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
+			<Footer />
 		</>
 	);
 }
