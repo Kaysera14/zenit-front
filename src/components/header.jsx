@@ -1,7 +1,8 @@
+import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-export function Header({ setFilter }) {
+export function Header({ setFilter, filter }) {
 	const [isMobile, setIsMobile] = useState(false);
 	const [isDashboard, setIsDashboard] = useState(false);
 	const navigate = useNavigate();
@@ -19,11 +20,15 @@ export function Header({ setFilter }) {
 		const handleResize = () => {
 			setIsMobile(window.innerWidth < 768);
 		};
+
+		handleResize();
+
 		window.addEventListener("resize", handleResize);
 		return () => {
 			window.removeEventListener("resize", handleResize);
 		};
 	}, []);
+
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
 		if (e.target[0].value === import.meta.env.VITE_APP_SECRET_KEY) {
@@ -57,20 +62,44 @@ export function Header({ setFilter }) {
 							<nav>
 								<ul className="flex justify-center align-middle gap-4">
 									<li>
-										<button
+										<Button
 											onClick={() => setFilter("Personal")}
-											className="border-4 w-[148px] h-[40px] text-xl text-center"
+											sx={{
+												border: "4px solid",
+												width: "148px",
+												height: "40px",
+												fontSize: "1.25rem",
+												textAlign: "center",
+												textTransform: "capitalize",
+												color: "#e5e7eb",
+												fontWeight: "normal",
+												borderRadius: "0",
+											}}
+											variant={filter === "Personal" ? "contained" : "outlined"}
 										>
 											Personal
-										</button>
+										</Button>
 									</li>
 									<li>
-										<button
+										<Button
 											onClick={() => setFilter("Professional")}
-											className="border-4 w-[148px] h-[40px] text-xl text-center"
+											sx={{
+												border: "4px solid",
+												width: "148px",
+												height: "40px",
+												fontSize: "1.25rem",
+												textAlign: "center",
+												textTransform: "capitalize",
+												color: "#e5e7eb",
+												fontWeight: "normal",
+												borderRadius: "0",
+											}}
+											variant={
+												filter === "Professional" ? "contained" : "outlined"
+											}
 										>
 											Professional
-										</button>
+										</Button>
 									</li>
 								</ul>
 							</nav>
@@ -89,20 +118,44 @@ export function Header({ setFilter }) {
 							<nav>
 								<ul className="flex justify-center align-middle gap-4">
 									<li>
-										<button
+										<Button
 											onClick={() => setFilter("Personal")}
-											className="border-4 w-[148px] h-[40px] text-xl text-center"
+											sx={{
+												border: "4px solid",
+												width: "148px",
+												height: "40px",
+												fontSize: "1.25rem",
+												textAlign: "center",
+												textTransform: "capitalize",
+												color: "#e5e7eb",
+												fontWeight: "normal",
+												borderRadius: "0",
+											}}
+											variant={filter === "Personal" ? "contained" : "outlined"}
 										>
 											Personal
-										</button>
+										</Button>
 									</li>
 									<li>
-										<button
+										<Button
 											onClick={() => setFilter("Professional")}
-											className="border-4 w-[148px] h-[40px] text-xl text-center"
+											sx={{
+												border: "4px solid",
+												width: "148px",
+												height: "40px",
+												fontSize: "1.25rem",
+												textAlign: "center",
+												textTransform: "capitalize",
+												color: "#e5e7eb",
+												fontWeight: "normal",
+												borderRadius: "0",
+											}}
+											variant={
+												filter === "Professional" ? "contained" : "outlined"
+											}
 										>
 											Professional
-										</button>
+										</Button>
 									</li>
 								</ul>
 							</nav>

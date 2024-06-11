@@ -14,6 +14,7 @@ export const NewModelForm = ({
 	uploadData,
 	handleUploadChange,
 	handleUploadSubmit,
+	handleChangeVideos,
 }) => {
 	const fileInputRef = useRef(null);
 	const [selectedImages, setSelectedImages] = useState([]);
@@ -153,6 +154,20 @@ export const NewModelForm = ({
 						))}
 					</ul>
 				)}
+				<TextField
+					label="Links de videos"
+					placeholder="Pon enlaces a tus vídeos de YouTube, separados por comas o saltos de línea"
+					type="text"
+					name="description"
+					autoComplete="description"
+					value={uploadData.videos}
+					onChange={handleChangeVideos}
+					required
+					variant="filled"
+					multiline
+					rows={4}
+					className="bg-white w-[40%] m-2"
+				/>
 				<input
 					className="custom-file-input hidden"
 					type="file"
