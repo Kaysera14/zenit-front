@@ -21,7 +21,10 @@ export function Postrow({
 			<p className="w-[12.5%]">{post?.title}</p>
 			<p className="w-[12.5%]">{post?.category1}</p>
 			<p className="w-[12.5%]">{post?.category2}</p>
-			<p className="w-[12.5%]">{post?.createdAt}</p>
+			<p className="w-[12.5%]">
+				{post?.createdAt &&
+					new Date(post.createdAt).toLocaleDateString("es-ES")}
+			</p>
 			<button
 				onClick={() => {
 					setModelEdit(post?.slug);
