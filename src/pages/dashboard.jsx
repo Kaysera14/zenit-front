@@ -25,6 +25,12 @@ export function Dashboard() {
 	const token = localStorage.getItem(
 		import.meta.env.VITE_APP_CURRENT_USER_STORAGE_ID
 	);
+
+	const handleChangeVideos = (event) => {
+		const links = event.target.value.split(/[\n,]+/).map((link) => link.trim());
+		setUploadData((prevData) => ({ ...prevData, videos: links }));
+	};
+
 	const [uploadData, setUploadData] = useState({
 		title: "",
 		description: "",
@@ -32,8 +38,8 @@ export function Dashboard() {
 		category1: "",
 		category2: "",
 		images: [],
+		videos: [],
 	});
-
 	const [modelEdit, setModelEdit] = useState(null);
 	const [editData, setEditData] = useState({
 		slug: "",
@@ -83,6 +89,7 @@ export function Dashboard() {
 			formData.append("technologies", uploadData.technologies);
 			formData.append("category1", uploadData.category1);
 			formData.append("category2", uploadData.category2);
+			formData.append("videos", uploadData.videos);
 
 			uploadData.images.forEach((image) => {
 				formData.append("images", image);
@@ -98,6 +105,7 @@ export function Dashboard() {
 					category1: "",
 					category2: "",
 					images: [],
+					videos: [],
 				});
 				setError(null);
 				setPosts([]);
@@ -182,6 +190,7 @@ export function Dashboard() {
 						uploadData={uploadData}
 						handleUploadChange={handleUploadChange}
 						handleUploadSubmit={handleUploadSubmit}
+						handleChangeVideos={handleChangeVideos}
 					/>
 				) : null}
 				{error ? (

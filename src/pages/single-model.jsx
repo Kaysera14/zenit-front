@@ -69,12 +69,13 @@ export function SingleModel() {
 					/>
 				))}
 				{postVideos?.map((video) => (
-					<video
-						src={apiURL + video.url}
-						alt={video.post}
+					<iframe
+						src={video.url}
+						title={video.post}
 						key={video.model_video_id}
 						className="w-[95%] h-auto"
-						controls
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						allowFullScreen
 					/>
 				))}
 				<Divider
