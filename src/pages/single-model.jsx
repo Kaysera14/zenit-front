@@ -2,22 +2,42 @@ import { useEffect, useState } from "react";
 import { Main } from "../components/main";
 import { getSinglePost } from "../api/get-single-post";
 import { useParams } from "react-router-dom";
-import { Divider } from "@mui/material";
+import { Box, CircularProgress, Divider } from "@mui/material";
 
 export function SingleModel() {
-	const [post, setPost] = useState([]);
+	const [model, setModel] = useState(null);
+	const [isLoading, setIsLoading] = useState(true);
 	const apiURL = import.meta.env.VITE_APP_BACKEND_UPLOADS;
 	const { slug } = useParams();
-	const postData = post.data;
-	const postImages = post.images;
-	const postVideos = post.videos;
+	const postData = model?.data;
+	const postImages = model?.images;
+	const postVideos = model?.videos;
+
 	useEffect(() => {
-		const fetchModel = async () => {
-			const post = await getSinglePost(slug);
-			setPost(post);
-		};
-		fetchModel();
+		getSinglePost(slug).then((fetchedModel) => {
+			setModel(fetchedModel);
+			setIsLoading(false);
+		});
 	}, [slug]);
+
+	if (isLoading) {
+		return (
+			<Box
+				sx={{
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+					position: "absolute",
+					top: "50%",
+					left: "50%",
+					transform: "translate(-50%, -50%)",
+				}}
+			>
+				<CircularProgress sx={{ color: "#e3e3e3" }} />
+			</Box>
+		);
+	}
+
 	return (
 		<Main>
 			<article className="flex flex-col items-center gap-2">
@@ -41,6 +61,11 @@ export function SingleModel() {
 						alt={image.post}
 						key={image.model_image_id}
 						className="w-[95%] h-auto"
+						onClick={() => {
+							if (window.innerWidth <= 768) {
+								window.open(apiURL + image.url, "_blank");
+							}
+						}}
 					/>
 				))}
 				{postVideos?.map((video) => (
