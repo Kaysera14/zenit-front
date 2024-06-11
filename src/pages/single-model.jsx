@@ -73,9 +73,9 @@ export function SingleModel() {
 						src={video.url}
 						title={video.post}
 						key={video.model_video_id}
-						className="w-[95%] h-auto"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 						allowFullScreen
+						className="w-[95%] h-[95vh]"
 					/>
 				))}
 				<Divider
