@@ -5,7 +5,7 @@ import { CurrentUserContext } from "../context/auth-context";
 import { Sidebar } from "../components/sidebar";
 import { getPosts } from "../api/get-posts";
 import { Topbar } from "../components/topbar";
-import { SearchForm } from "../forms/search-form";
+import { UtilsBar } from "../components/utils-bar";
 import { Postrow } from "../components/postrow";
 import { deletePosts } from "../api/delete-post";
 import { editPosts } from "../api/edit-post";
@@ -15,7 +15,7 @@ import { uploadPost } from "../api/upload-post";
 import { EditModel } from "../forms/edit-model-form";
 import { getSinglePost } from "../api/get-single-post";
 
-export function Dashboard({ setPostsHome }) {
+export function Dashboard({ setPostsHome, setModelUploaded }) {
 	const { user } = useContext(CurrentUserContext);
 	const [module, setModule] = useState("home");
 	const navigate = useNavigate();
@@ -109,6 +109,7 @@ export function Dashboard({ setPostsHome }) {
 				});
 				setError(null);
 				setPostsHome([]);
+				setModelUploaded(true);
 			} else {
 				setError(upload.message);
 			}
@@ -120,6 +121,7 @@ export function Dashboard({ setPostsHome }) {
 	const handleDelete = async (slug) => {
 		await deletePosts(slug);
 		setPosts([]);
+		setPostsHome([]);
 	};
 
 	const handleEdit = async () => {
@@ -135,7 +137,7 @@ export function Dashboard({ setPostsHome }) {
 			setPosts(postsData);
 		};
 		fetchPosts();
-	}, [module]);
+	}, [module, posts?.length]);
 
 	useEffect(() => {
 		const token = localStorage.getItem(
@@ -145,6 +147,29 @@ export function Dashboard({ setPostsHome }) {
 			navigate("/");
 		}
 	}, [user, navigate]);
+
+	const [postsToDelete, setPostsToDelete] = useState([]);
+
+	const handleCheckDelete = (event, slug) => {
+		if (event.target.checked) {
+			setPostsToDelete((prevPosts) => [...prevPosts, slug]);
+		} else {
+			setPostsToDelete((prevPosts) =>
+				prevPosts.filter((prevPost) => prevPost !== slug)
+			);
+		}
+	};
+
+	const multipleDelete = async () => {
+		if (window.confirm(`¿Seguro que quieres borrar estos modelos?`)) {
+			for (const post of postsToDelete) {
+				await deletePosts(post);
+			}
+			setPostsToDelete([]);
+			setPosts([]);
+			setPostsHome([]);
+		}
+	};
 	return (
 		<>
 			<Topbar />
@@ -156,11 +181,13 @@ export function Dashboard({ setPostsHome }) {
 			>
 				{module === "home" ? (
 					<section className="w-full flex flex-col items-center gap-4">
-						{/* <SearchForm /> */}
-						<h1 className="uppercase text-2xl">
-							Edita y borra los modelos ya subidos
-						</h1>
-						<ul className="w-full flex gap-2 flex-col">
+						<UtilsBar
+							posts={posts}
+							multipleDelete={multipleDelete}
+							postsToDelete={postsToDelete}
+							setPostsToDelete={setPostsToDelete}
+						/>
+						<ul className="w-full flex flex-col">
 							{posts.map((post) => (
 								<Postrow
 									key={post?.model_id}
@@ -169,6 +196,8 @@ export function Dashboard({ setPostsHome }) {
 									handleDelete={handleDelete}
 									setModelEdit={setModelEdit}
 									setModule={setModule}
+									handleCheckDelete={handleCheckDelete}
+									postsToDelete={postsToDelete}
 								/>
 							))}
 						</ul>
