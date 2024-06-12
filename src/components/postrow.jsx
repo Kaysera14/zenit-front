@@ -9,7 +9,7 @@ export function Postrow({
 	setModule,
 }) {
 	return (
-		<li className="flex flex-row w-full items-center justify-around">
+		<li className="flex flex-row w-full items-center justify-around text-center">
 			<p>{post?.model_id}</p>
 			<Link to={`/models/${post?.slug}`}>
 				<img
