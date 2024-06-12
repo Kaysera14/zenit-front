@@ -108,7 +108,6 @@ export function Dashboard({ setPostsHome }) {
 					videos: [],
 				});
 				setError(null);
-				setPosts([]);
 				setPostsHome([]);
 			} else {
 				setError(upload.message);
@@ -136,17 +135,7 @@ export function Dashboard({ setPostsHome }) {
 			setPosts(postsData);
 		};
 		fetchPosts();
-	}, [posts.length]);
-
-	useEffect(() => {
-		const fetchPosts = async () => {
-			const posts = await getPosts();
-			const postsData = posts.data;
-			setPosts(postsData);
-		};
-		const interval = setInterval(fetchPosts, 5000);
-		return () => clearInterval(interval);
-	}, []);
+	}, [module]);
 
 	useEffect(() => {
 		const token = localStorage.getItem(
