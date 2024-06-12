@@ -14,6 +14,7 @@ import { Footer } from "./components/footer";
 function App() {
 	const [filter, setFilter] = useState("");
 	const [posts, setPosts] = useState([]);
+	const [modelUploaded, setModelUploaded] = useState(false);
 	const [filteredPosts, setFilteredPosts] = useState([]);
 	const location = useLocation();
 
@@ -23,7 +24,11 @@ function App() {
 			const postsData = posts.data;
 			setPosts(postsData);
 		};
+		fetchPosts();
+		setModelUploaded(false);
+	}, [modelUploaded]);
 
+	useEffect(() => {
 		if (location.pathname.includes("/models")) {
 			setFilter("");
 		}
@@ -33,10 +38,6 @@ function App() {
 				post.category1.toLowerCase().includes(filter.toLowerCase())
 			);
 			setFilteredPosts(newFilteredPosts);
-		} else {
-			if (posts.length === 0) {
-				fetchPosts();
-			}
 		}
 
 		if (filter === "") {
@@ -57,7 +58,12 @@ function App() {
 					<Route path="login" element={<Login />} />
 					<Route
 						path="dashboard"
-						element={<Dashboard setPostsHome={setPosts} />}
+						element={
+							<Dashboard
+								setPostsHome={setPosts}
+								setModelUploaded={setModelUploaded}
+							/>
+						}
 					/>
 				</Route>
 				<Route path="models/:slug" element={<SingleModel />} />
