@@ -1,4 +1,5 @@
 import { Delete, Edit } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export function Postrow({
@@ -7,9 +8,25 @@ export function Postrow({
 	handleDelete,
 	setModelEdit,
 	setModule,
+	handleCheckDelete,
+	postsToDelete,
 }) {
 	return (
-		<li className="flex flex-row w-full items-center justify-around">
+		<li
+			className={`flex flex-row w-full items-center justify-around text-center py-1 ${
+				postsToDelete.includes(post?.slug)
+					? "bg-red-500"
+					: post?.model_id % 2 === 0
+					? "bg-slate-800"
+					: "bg-slate-700"
+			}`}
+		>
+			<input
+				type="checkbox"
+				onChange={(event) => handleCheckDelete(event, post?.slug)}
+				checked={postsToDelete.includes(post?.slug)}
+				className="w-4 h-4 rounded"
+			/>
 			<p>{post?.model_id}</p>
 			<Link to={`/models/${post?.slug}`}>
 				<img
@@ -25,15 +42,15 @@ export function Postrow({
 				{post?.createdAt &&
 					new Date(post.createdAt).toLocaleDateString("es-ES")}
 			</p>
-			<button
+			<IconButton
 				onClick={() => {
 					setModelEdit(post?.slug);
 					setModule("edit");
 				}}
 			>
-				<Edit />
-			</button>
-			<button
+				<Edit color="info" />
+			</IconButton>
+			<IconButton
 				onClick={() => {
 					if (
 						window.confirm(
@@ -44,8 +61,10 @@ export function Postrow({
 					}
 				}}
 			>
-				<Delete />
-			</button>
+				<Delete
+					color={`${postsToDelete.includes(post?.slug) ? "info" : "error"}`}
+				/>
+			</IconButton>
 		</li>
 	);
 }

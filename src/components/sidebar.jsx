@@ -23,7 +23,8 @@ export function Sidebar({ user, setModule, navigate }) {
 						borderColor: "white",
 					},
 					textTransform: "uppercase",
-					fontSize: "1.2rem",
+					fontSize: "1rem",
+					paddingBottom: "0.5rem",
 				}}
 			>
 				<h1 className="flex justify-center">{user?.username}</h1>

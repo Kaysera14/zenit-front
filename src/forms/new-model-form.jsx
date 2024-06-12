@@ -45,6 +45,39 @@ export const NewModelForm = ({
 	const handleFileClick = () => {
 		fileInputRef.current.click();
 	};
+	const [dragging, setDragging] = useState(false);
+
+	const handleDragStart = (index) => {
+		setDragging(index);
+	};
+
+	const handleDragEnter = (index) => {
+		if (dragging !== null && dragging !== index) {
+			const newWebImages = [...webImages];
+			newWebImages.splice(index, 0, newWebImages.splice(dragging, 1)[0]);
+			setWebImages(newWebImages);
+
+			const newSelectedImages = [...selectedImages];
+			newSelectedImages.splice(
+				index,
+				0,
+				newSelectedImages.splice(dragging, 1)[0]
+			);
+			setSelectedImages(newSelectedImages);
+
+			setUploadData({
+				...uploadData,
+				images: newSelectedImages,
+				webImages: newWebImages,
+			});
+
+			setDragging(index);
+		}
+	};
+
+	const handleDragEnd = () => {
+		setDragging(null);
+	};
 	return (
 		<>
 			<h1 className="w-full text-center text-xl py-4">
@@ -144,11 +177,20 @@ export const NewModelForm = ({
 				{webImages?.length !== 0 && (
 					<ul className="grid grid-cols-2 overflow-y-scroll gap-1 md:grid-cols-4">
 						{webImages?.map((image, index) => (
-							<li key={index}>
+							<li
+								key={index}
+								draggable
+								onDragStart={() => handleDragStart(index)}
+								onDragEnter={() => handleDragEnter(index)}
+								onDragEnd={handleDragEnd}
+								style={{ userSelect: "none" }}
+							>
 								<img
 									src={`${image}`}
 									alt="rentImage"
-									className="w-48 static object-cover rounded-md"
+									className={`w-48 static object-cover rounded-md ${
+										dragging === index ? "bg-lightgreen" : ""
+									}`}
 								/>
 							</li>
 						))}
