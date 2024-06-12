@@ -15,7 +15,7 @@ import { uploadPost } from "../api/upload-post";
 import { EditModel } from "../forms/edit-model-form";
 import { getSinglePost } from "../api/get-single-post";
 
-export function Dashboard() {
+export function Dashboard({ setPostsHome }) {
 	const { user } = useContext(CurrentUserContext);
 	const [module, setModule] = useState("home");
 	const navigate = useNavigate();
@@ -109,6 +109,7 @@ export function Dashboard() {
 				});
 				setError(null);
 				setPosts([]);
+				setPostsHome([]);
 			} else {
 				setError(upload.message);
 			}
