@@ -19,7 +19,6 @@ export function SingleModel() {
 			setIsLoading(false);
 		});
 	}, [slug]);
-
 	if (isLoading) {
 		return (
 			<Box
@@ -40,7 +39,7 @@ export function SingleModel() {
 
 	return (
 		<Main>
-			<article className="flex flex-col items-center gap-2">
+			<article className="flex flex-col items-center gap-2 w-full">
 				<h1 className="text-4xl text-white">{postData?.title}</h1>
 				<Divider
 					aria-hidden="true"
