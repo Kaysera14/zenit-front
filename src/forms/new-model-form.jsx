@@ -174,6 +174,20 @@ export const NewModelForm = ({
 						/>
 					</RadioGroup>
 				</FormControl>
+
+				<TextField
+					label="Links de videos"
+					placeholder="Pon enlaces a tus vídeos de YouTube, separados por comas o saltos de línea"
+					type="text"
+					name="description"
+					autoComplete="description"
+					value={uploadData.videos}
+					onChange={handleChangeVideos}
+					variant="filled"
+					multiline
+					rows={4}
+					className="bg-white w-[40%] m-2"
+				/>
 				{webImages?.length !== 0 && (
 					<ul className="grid grid-cols-2 overflow-y-scroll gap-1 md:grid-cols-4">
 						{webImages?.map((image, index) => (
@@ -196,20 +210,6 @@ export const NewModelForm = ({
 						))}
 					</ul>
 				)}
-				<TextField
-					label="Links de videos"
-					placeholder="Pon enlaces a tus vídeos de YouTube, separados por comas o saltos de línea"
-					type="text"
-					name="description"
-					autoComplete="description"
-					value={uploadData.videos}
-					onChange={handleChangeVideos}
-					required
-					variant="filled"
-					multiline
-					rows={4}
-					className="bg-white w-[40%] m-2"
-				/>
 				<input
 					className="custom-file-input hidden"
 					type="file"
