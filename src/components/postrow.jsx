@@ -11,6 +11,7 @@ export function Postrow({
 	handleCheckDelete,
 	postsToDelete,
 }) {
+	const videoID = post?.video?.split("/embed/")[1];
 	return (
 		<li
 			className={`flex flex-row w-full items-center justify-around text-center py-1 ${
@@ -29,11 +30,19 @@ export function Postrow({
 			/>
 			<p>{post?.model_id}</p>
 			<Link to={`/models/${post?.slug}`}>
-				<img
-					src={apiURL + post?.cover}
-					alt={post?.slug}
-					className="w-20 h-20 static object-cover"
-				/>
+				{post?.cover ? (
+					<img
+						src={apiURL + post?.cover}
+						alt={post?.slug}
+						className="w-20 h-20 static object-cover"
+					/>
+				) : (
+					<img
+						src={`https://i3.ytimg.com/vi/${videoID}/maxresdefault.jpg`}
+						alt={post?.slug}
+						className="w-20 h-20 static object-cover"
+					/>
+				)}
 			</Link>
 			<p className="w-[12.5%]">{post?.title}</p>
 			<p className="w-[12.5%]">{post?.category1}</p>
