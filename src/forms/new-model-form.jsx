@@ -1,8 +1,10 @@
+import { Delete } from "@mui/icons-material";
 import {
 	Button,
 	FormControl,
 	FormControlLabel,
 	FormLabel,
+	IconButton,
 	Radio,
 	RadioGroup,
 	TextField,
@@ -78,6 +80,21 @@ export const NewModelForm = ({
 	const handleDragEnd = () => {
 		setDragging(null);
 	};
+
+	function handleRemove(index) {
+		const newSelectedImages = selectedImages.filter((_, i) => i !== index);
+		const newWebImages = webImages.filter((_, i) => i !== index);
+
+		setSelectedImages(newSelectedImages);
+		setWebImages(newWebImages);
+
+		setUploadData((prevData) => ({
+			...prevData,
+			images: newSelectedImages,
+			webImages: newWebImages,
+		}));
+	}
+
 	return (
 		<>
 			<h1 className="w-full text-center text-xl py-4">
@@ -197,7 +214,7 @@ export const NewModelForm = ({
 								onDragStart={() => handleDragStart(index)}
 								onDragEnter={() => handleDragEnter(index)}
 								onDragEnd={handleDragEnd}
-								style={{ userSelect: "none" }}
+								style={{ userSelect: "none", position: "relative" }}
 							>
 								<img
 									src={`${image}`}
@@ -205,7 +222,20 @@ export const NewModelForm = ({
 									className={`w-48 static object-cover rounded-md ${
 										dragging === index ? "bg-lightgreen" : ""
 									}`}
+									style={{ position: "relative", zIndex: 1 }}
 								/>
+								<IconButton
+									onClick={() => handleRemove(index)}
+									className="top-0 left-0 bg-white p-2 rounded-full"
+									style={{
+										position: "absolute",
+										zIndex: 2,
+										backgroundColor: "white",
+										padding: "0.2rem",
+									}}
+								>
+									<Delete color="error" />
+								</IconButton>
 							</li>
 						))}
 					</ul>
