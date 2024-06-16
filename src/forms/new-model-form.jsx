@@ -165,7 +165,7 @@ export const NewModelForm = ({
 					</RadioGroup>
 				</FormControl>
 				<FormControl className="bg-white w-[40%] m-2">
-					<FormLabel id="category2">Personal / Profesional</FormLabel>
+					<FormLabel id="category2">Cartoon / Realista / Estilizados</FormLabel>
 					<RadioGroup
 						aria-labelledby="category2"
 						name="category2"
