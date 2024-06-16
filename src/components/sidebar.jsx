@@ -9,7 +9,11 @@ export function Sidebar({ user, setModule, navigate }) {
 	};
 	return (
 		<aside className="bg-slate-900 w-[18rem] h-screen border-r-2 border-gray-600 absolute flex flex-col top-0">
-			<button onClick={() => alert("Soy un easter egg")}>
+			<button
+				onClick={() =>
+					alert("Tobias no reconoce a Israel como estado legítimo")
+				}
+			>
 				<img
 					src="/zenit-logo.webp"
 					alt="Zenit"
