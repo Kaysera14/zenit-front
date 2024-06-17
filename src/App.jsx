@@ -44,6 +44,7 @@ function App() {
 			setFilteredPosts([]);
 		}
 	}, [filter, posts, location.pathname]);
+
 	return (
 		<>
 			<Header setFilter={setFilter} filter={filter} />

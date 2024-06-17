@@ -1,6 +1,7 @@
 import { Divider } from "@mui/material";
 import { useLogout } from "../hooks/use-logout";
 import { Logout } from "@mui/icons-material";
+import { messages } from "../assets/frases-tobias";
 
 export function Sidebar({ user, setModule, navigate }) {
 	const logout = useLogout();
@@ -10,9 +11,10 @@ export function Sidebar({ user, setModule, navigate }) {
 	return (
 		<aside className="bg-slate-900 w-[18rem] h-screen border-r-2 border-gray-600 absolute flex flex-col top-0">
 			<button
-				onClick={() =>
-					alert("Tobias no reconoce a Israel como estado legítimo")
-				}
+				onClick={() => {
+					const randomIndex = Math.floor(Math.random() * messages.length);
+					alert(messages[randomIndex]);
+				}}
 			>
 				<img
 					src="/zenit-logo.webp"
