@@ -10,4 +10,9 @@ export const messages = [
 	"El chulo me da miedo",
 	"Yato es un cadaver con patas",
 	"PIMBA PIMBA PIMBA",
+	"Ya no tenemos pez mantequilla",
+	"Soy un super easter egg",
+	"Nosferatu esiste",
+	"League of Darren",
+	"Rafa ponme un dies",
 ];
