@@ -42,6 +42,7 @@ export function Dashboard({ setPostsHome, setModelUploaded }) {
 	});
 	const [modelEdit, setModelEdit] = useState(null);
 	const [editData, setEditData] = useState({
+		model_id: "",
 		slug: "",
 		title: "",
 		description: "",
@@ -62,6 +63,7 @@ export function Dashboard({ setPostsHome, setModelUploaded }) {
 			const response = await getSinglePost(modelEdit);
 			const modelToEdit = response.data;
 			setEditData({
+				model_id: modelToEdit?.model_id,
 				slug: modelToEdit?.slug,
 				title: modelToEdit?.title,
 				description: modelToEdit?.description,
