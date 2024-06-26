@@ -24,19 +24,6 @@ export const EditModel = ({
 				onSubmit={handleEdit}
 			>
 				<TextField
-					label="ID del modelo"
-					placeholder="Edita el ID del modelo"
-					type="text"
-					name="model_id"
-					autoComplete="model_id"
-					value={editData?.model_id || ""}
-					onChange={handleEditChange}
-					required
-					variant="filled"
-					className="bg-white w-[40%] m-2"
-				/>
-				<p className="uppercase">A más bajo el ID, más arriba aparecerá</p>
-				<TextField
 					label="Título del modelo"
 					placeholder="Ponle un nombre a tu modelo"
 					type="text"
