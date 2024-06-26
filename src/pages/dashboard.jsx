@@ -22,10 +22,10 @@ export function Dashboard({ setPostsHome, setModelUploaded }) {
 	const [posts, setPosts] = useState([]);
 	const apiURL = import.meta.env.VITE_APP_BACKEND_UPLOADS;
 	const [error, setError] = useState(null);
+	const [sortedPosts, setSortedPosts] = useState([]);
 	const token = localStorage.getItem(
 		import.meta.env.VITE_APP_CURRENT_USER_STORAGE_ID
 	);
-
 	const handleChangeVideos = (event) => {
 		const links = event.target.value.split(/[\n,]+/).map((link) => link.trim());
 		setUploadData((prevData) => ({ ...prevData, videos: links }));
@@ -170,6 +170,11 @@ export function Dashboard({ setPostsHome, setModelUploaded }) {
 			setPostsHome([]);
 		}
 	};
+
+	useEffect(() => {
+		const sorted = [...posts].sort((a, b) => b.model_id - a.model_id);
+		setSortedPosts(sorted);
+	}, [posts]);
 	return (
 		<>
 			<Topbar />
@@ -188,10 +193,10 @@ export function Dashboard({ setPostsHome, setModelUploaded }) {
 							setPostsToDelete={setPostsToDelete}
 						/>
 						<ul className="w-full flex flex-col">
-							{posts.map((post) => (
+							{sortedPosts.map((sortedPosts) => (
 								<Postrow
-									key={post?.model_id}
-									post={post}
+									key={sortedPosts?.model_id}
+									sortedPosts={sortedPosts}
 									apiURL={apiURL}
 									handleDelete={handleDelete}
 									setModelEdit={setModelEdit}
