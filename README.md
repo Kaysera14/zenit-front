@@ -8,9 +8,6 @@ Zenit Front is the user interface of the ZenitBragi project, a web application d
 
 - Installation
 - Usage
-- Contribution
-- License
-- Acknowledgements
 
 ## Installation
 
