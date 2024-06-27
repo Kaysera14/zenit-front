@@ -5,7 +5,7 @@ export function PostCard(post) {
 	const postData = post.post;
 
 	const videoID = postData?.video?.split("/embed/")[1];
-	console.log(postData.cover);
+
 	return (
 		<article className="gap-2 text-center break-inside-avoid-column">
 			<Link
