@@ -124,10 +124,29 @@ export function Dashboard({ setPostsHome, setModelUploaded }) {
 		setPostsHome([]);
 	};
 
-	const handleEdit = async () => {
+	function debounce(func, wait) {
+		let timeout;
+		return function executedFunction(...args) {
+			const later = () => {
+				clearTimeout(timeout);
+				func(...args);
+			};
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+		};
+	}
+
+	const debouncedEditPosts = debounce(async (token, editData, onSuccess) => {
 		await editPosts(token, editData);
-		setPosts([]);
-		setModule("home");
+		onSuccess();
+	}, 250);
+
+	const handleEdit = async (e) => {
+		e.preventDefault();
+		await debouncedEditPosts(token, editData, () => {
+			setPosts([]);
+			setModule("home");
+		});
 	};
 
 	useEffect(() => {

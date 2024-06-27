@@ -10,9 +10,9 @@ export function PostCard(post) {
 
 	useEffect(() => {
 		const img = new Image();
-		img.src = apiURL + postData.cover;
+		img.src = postData?.cover ? apiURL + postData.cover : "fallback-image-url";
 		img.onload = () => setImageLoaded(true);
-	}, [apiURL, postData.cover]);
+	}, [apiURL, postData?.cover]);
 	return (
 		<article className="gap-2 text-center break-inside-avoid-column">
 			<Link
