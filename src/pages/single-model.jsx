@@ -37,6 +37,36 @@ export function SingleModel() {
 		);
 	}
 
+	function splitDescriptionIntoLinks(description) {
+		const urlRegex =
+			/(\bhttps?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+		return description.split(urlRegex);
+	}
+
+	function renderDescriptionWithLinks(description) {
+		const descriptionParts = splitDescriptionIntoLinks(description);
+		return (
+			<>
+				{descriptionParts.map((part, index) => {
+					if (part.match(/^https?:\/\/[^\s]+$/)) {
+						return (
+							<a
+								key={index}
+								href={part}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								{part}
+							</a>
+						);
+					} else {
+						return <span key={index}>{part}</span>; // Use span for text to maintain React key requirements
+					}
+				})}
+			</>
+		);
+	}
+
 	return (
 		<Main>
 			<article className="flex flex-col items-center gap-2 w-full">
@@ -90,7 +120,10 @@ export function SingleModel() {
 				>
 					<h2 className="uppercase text-xl">Description</h2>
 				</Divider>
-				<p className="w-[95%] pt-1 mt-1">{postData?.description}</p>
+				<p id="description" className="w-[95%] pt-1 mt-1 whitespace-pre-wrap">
+					{postData?.description &&
+						renderDescriptionWithLinks(postData.description)}
+				</p>
 				<Divider
 					aria-hidden="true"
 					className="w-[95%]"
