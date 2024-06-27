@@ -1,11 +1,18 @@
+import { Box, CircularProgress } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export function PostCard(post) {
 	const apiURL = import.meta.env.VITE_APP_BACKEND_UPLOADS;
 	const postData = post.post;
-
+	const [isImageLoaded, setImageLoaded] = useState(false);
 	const videoID = postData?.video?.split("/embed/")[1];
 
+	useEffect(() => {
+		const img = new Image();
+		img.src = apiURL + postData.cover;
+		img.onload = () => setImageLoaded(true);
+	}, [apiURL, postData.cover]);
 	return (
 		<article className="gap-2 text-center break-inside-avoid-column">
 			<Link
@@ -13,11 +20,27 @@ export function PostCard(post) {
 				to={"/models/" + postData.slug}
 			>
 				{postData.cover ? (
-					<img
-						className="static object-cover h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"
-						src={apiURL + postData.cover}
-						alt={postData.title}
-					/>
+					isImageLoaded ? (
+						<img
+							className="static object-cover h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"
+							src={apiURL + postData.cover}
+							alt={postData.title}
+						/>
+					) : (
+						<Box
+							sx={{
+								display: "flex",
+								justifyContent: "center",
+								alignItems: "center",
+								position: "absolute",
+								top: "50%",
+								left: "50%",
+								transform: "translate(-50%, -50%)",
+							}}
+						>
+							<CircularProgress sx={{ color: "#e3e3e3" }} />
+						</Box>
+					)
 				) : (
 					<img
 						className="static object-cover h-[13rem] w-[13rem] md:h-[16rem] md:w-[16rem] xl:h-[22rem] xl:w-[22rem]"
