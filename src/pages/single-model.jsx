@@ -60,7 +60,7 @@ export function SingleModel() {
 							</a>
 						);
 					} else {
-						return <span key={index}>{part}</span>; // Use span for text to maintain React key requirements
+						return <span key={index}>{part}</span>;
 					}
 				})}
 			</>
@@ -89,10 +89,28 @@ export function SingleModel() {
 						src={apiURL + image.url}
 						alt={image.post}
 						key={image.model_image_id}
-						className="w-[95%] h-auto"
-						onClick={() => {
-							if (window.innerWidth <= 768) {
-								window.open(apiURL + image.url, "_blank");
+						className="h-auto"
+						onLoad={(e) => {
+							const target = e.target;
+							const width = target.naturalWidth;
+							const height = target.naturalHeight;
+							if (width > height) {
+								target.style.width = "95%";
+							} else {
+								if (window.innerWidth < 768) {
+									target.style.width = "95%";
+								} else {
+									target.style.width = "30%";
+									target.style.backgroundColor = "#f7fafc";
+									target.style.padding = "16px";
+									target.style.margin = "8px";
+									target.style.borderRadius = "8px";
+									target.style.boxShadow =
+										"0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)";
+									target.style.display = "flex";
+									target.style.justifyContent = "center";
+									target.style.alignItems = "center";
+								}
 							}
 						}}
 					/>
