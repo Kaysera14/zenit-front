@@ -28,7 +28,7 @@ export function Home({ filteredPosts, posts }) {
 		);
 	}
 	return (
-		<Main>
+		<Main className={"xl:px-2"}>
 			{filteredPosts.length > 0
 				? filteredPosts.map((post) => (
 						<PostCard key={post.model_id} post={post} />

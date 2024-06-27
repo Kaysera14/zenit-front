@@ -37,6 +37,36 @@ export function SingleModel() {
 		);
 	}
 
+	function splitDescriptionIntoLinks(description) {
+		const urlRegex =
+			/(\bhttps?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+		return description.split(urlRegex);
+	}
+
+	function renderDescriptionWithLinks(description) {
+		const descriptionParts = splitDescriptionIntoLinks(description);
+		return (
+			<>
+				{descriptionParts.map((part, index) => {
+					if (part.match(/^https?:\/\/[^\s]+$/)) {
+						return (
+							<a
+								key={index}
+								href={part}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								{part}
+							</a>
+						);
+					} else {
+						return <span key={index}>{part}</span>;
+					}
+				})}
+			</>
+		);
+	}
+
 	return (
 		<Main>
 			<article className="flex flex-col items-center gap-2 w-full">
@@ -59,10 +89,28 @@ export function SingleModel() {
 						src={apiURL + image.url}
 						alt={image.post}
 						key={image.model_image_id}
-						className="w-[95%] h-auto"
-						onClick={() => {
-							if (window.innerWidth <= 768) {
-								window.open(apiURL + image.url, "_blank");
+						className="h-auto"
+						onLoad={(e) => {
+							const target = e.target;
+							const width = target.naturalWidth;
+							const height = target.naturalHeight;
+							if (width > height) {
+								target.style.width = "95%";
+							} else {
+								if (window.innerWidth < 768) {
+									target.style.width = "95%";
+								} else {
+									target.style.width = "30%";
+									target.style.backgroundColor = "#f7fafc";
+									target.style.padding = "16px";
+									target.style.margin = "8px";
+									target.style.borderRadius = "8px";
+									target.style.boxShadow =
+										"0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)";
+									target.style.display = "flex";
+									target.style.justifyContent = "center";
+									target.style.alignItems = "center";
+								}
 							}
 						}}
 					/>
@@ -90,7 +138,10 @@ export function SingleModel() {
 				>
 					<h2 className="uppercase text-xl">Description</h2>
 				</Divider>
-				<p className="w-[95%] pt-1 mt-1">{postData?.description}</p>
+				<p id="description" className="w-[95%] pt-1 mt-1 whitespace-pre-wrap">
+					{postData?.description &&
+						renderDescriptionWithLinks(postData.description)}
+				</p>
 				<Divider
 					aria-hidden="true"
 					className="w-[95%]"
