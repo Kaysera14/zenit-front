@@ -33,9 +33,13 @@ function App() {
 			setFilter("");
 		}
 
-		if (filter === "Professional" || filter === "Personal") {
+		if (
+			filter === "Cartoon" ||
+			filter === "Realistic" ||
+			filter === "Stylized"
+		) {
 			const newFilteredPosts = posts.filter((post) =>
-				post.category1.toLowerCase().includes(filter.toLowerCase())
+				post.category2.toLowerCase().includes(filter.toLowerCase())
 			);
 			setFilteredPosts(newFilteredPosts);
 		}

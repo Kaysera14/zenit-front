@@ -58,7 +58,7 @@ export function Header({ setFilter, filter }) {
 							<ul className="flex justify-center align-middle gap-4">
 								<li>
 									<Button
-										onClick={() => setFilter("Personal")}
+										onClick={() => setFilter("Cartoon")}
 										sx={{
 											border: "4px solid",
 											width: "148px",
@@ -70,14 +70,14 @@ export function Header({ setFilter, filter }) {
 											fontWeight: "normal",
 											borderRadius: "0",
 										}}
-										variant={filter === "Personal" ? "contained" : "outlined"}
+										variant={filter === "Cartoon" ? "contained" : "outlined"}
 									>
-										Personal
+										Cartoon
 									</Button>
 								</li>
 								<li>
 									<Button
-										onClick={() => setFilter("Professional")}
+										onClick={() => setFilter("Realistic")}
 										sx={{
 											border: "4px solid",
 											width: "148px",
@@ -89,11 +89,28 @@ export function Header({ setFilter, filter }) {
 											fontWeight: "normal",
 											borderRadius: "0",
 										}}
-										variant={
-											filter === "Professional" ? "contained" : "outlined"
-										}
+										variant={filter === "Realistic" ? "contained" : "outlined"}
 									>
-										Professional
+										Realistic
+									</Button>
+								</li>
+								<li>
+									<Button
+										onClick={() => setFilter("Stylized")}
+										sx={{
+											border: "4px solid",
+											width: "148px",
+											height: "40px",
+											fontSize: "1.25rem",
+											textAlign: "center",
+											textTransform: "capitalize",
+											color: "#e5e7eb",
+											fontWeight: "normal",
+											borderRadius: "0",
+										}}
+										variant={filter === "Stylized" ? "contained" : "outlined"}
+									>
+										Stylized
 									</Button>
 								</li>
 							</ul>
